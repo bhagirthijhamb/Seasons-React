@@ -1,17 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class App extends React.Component {
+  // First function to be called with props object
+  constructor(props) {
+    // we re overwriting the constructor function so we
+    // refer to parents constructor function to get its functionality
+    super(props); 
+    this.state = { lat: null, errMessage: '' }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+        this.setState({ lat: position.coords.latitude})
+      },
+      (err) => {
+        console.log(err);
+        this.setState({ errMessage: err.message })
+      }
+    );
+  }
+
+  // React says we have to define render!!
+  render (){
+      if(this.state.errMessage && !this.state.lat){
+        return <div>Error: {this.state.errMessage}</div>
+      }
+      if(!this.state.errMessage && this.state.lat){
+        return <div>Latitude: {this.state.lat}</div>
+      }
+      return <div>Loading...</div>
+  }
+}
+
+ReactDOM.render(<App />, document.querySelector("#root"));
