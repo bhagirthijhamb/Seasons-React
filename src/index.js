@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
+import Loader from './Loader';
 
 class App extends React.Component {
   // First function to be called with props object
@@ -32,18 +33,29 @@ class App extends React.Component {
     console.log('My component was just updated - it rerendered');
   }
 
-  // React says we have to define render!!
-  render (){
-      if(this.state.errMessage && !this.state.lat){
+  renderContent() {
+    if(this.state.errMessage && !this.state.lat){
         return <div>Error: {this.state.errMessage}</div>
       }
       if(!this.state.errMessage && this.state.lat){
         // return <div>Latitude: {this.state.lat}</div>
-        
+
         // passing state as a prop to the child component
+        // return <SeasonDisplay lat={this.state.lat}/>
         return <SeasonDisplay lat={this.state.lat}/>
       }
-      return <div>Loading...</div>
+      // return <div>Loading...</div>
+      // return <Loader />
+      return <Loader message="Please accept location request" />
+  }
+
+  // React says we have to define render!!
+  render (){
+      return (
+        <div className="borderRed">
+          {this.renderContent()}
+        </div>
+      )
   }
 }
 
