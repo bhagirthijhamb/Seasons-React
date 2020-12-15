@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
 import Loader from './Loader';
+import Clock from './Clock';
 
 class App extends React.Component {
   // First function to be called with props object
@@ -53,6 +54,7 @@ class App extends React.Component {
   render (){
       return (
         <div className="borderRed">
+          <Clock />
           {this.renderContent()}
         </div>
       )
