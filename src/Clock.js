@@ -1,6 +1,7 @@
 import React from 'react';
 
 class Clock extends React.Component {
+  state = { time: new Date().toLocaleTimeString() }
   state = { time: ''}
 
   componentDidMount(){
